@@ -1,0 +1,11 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Log out";
+    Layout = "~/Pages/Shared/_LoginLayout.cshtml";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    <p>You have successfully logged out of the application. <a href="~/Identity/Account/Login">Login again</a> </p>
+</header>

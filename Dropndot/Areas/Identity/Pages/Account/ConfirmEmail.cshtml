@@ -1,0 +1,27 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Confirm email";
+    Layout = "~/Pages/Shared/_LoginLayout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div asp-validation-summary="All" class="text-danger" style="padding-top:50px;"></div>
+@{
+    if (Model.ShowInvalid)
+    {
+        <p>
+            Error confirming your email.
+        </p>
+        <p>
+            If you can login, try updating your email again.<br />
+            If you cannot login, try resend verification.
+        </p>
+    }
+    else
+    {
+        <p>
+            Thank you for confirming your email. Now Complete your registration with personal information. <a href="~/Identity/Account/RegisterWithPersonalData?userId=@ViewData["UserId"]">Click</a>
+        </p>
+    }
+}
