@@ -2,24 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Dropndot.Data;
 using Dropndot.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Dropndot.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
-    public class RecoverAccountModel : PageModel
+    public class RecoverUsernameModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
 
-        public RecoverAccountModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public RecoverUsernameModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -41,11 +38,11 @@ namespace Dropndot.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string userEmail)
         {
-           
+
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userEmail}'.");
+                return NotFound($"Unable to load user with Email '{userEmail}'.");
             }
 
             ViewData["SecurityQuestion"] = user.SecurityQuestion;
@@ -64,24 +61,16 @@ namespace Dropndot.Areas.Identity.Pages.Account
                     // Don't reveal that the user does not exist or is not confirmed
                     return NotFound($"User Email is incorrect' {Input.SecurityAnswer} '.");
                 }
-                if(user.SecurityAnswer != Input.SecurityAnswer)
+                if (user.SecurityAnswer != Input.SecurityAnswer)
                 {
                     return NotFound($"Security answer is incorrect' {Input.SecurityAnswer} '.");
                 }
 
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.Page(
-                    "/Account/ResetPassword",
-                    pageHandler: null,
-                    values: new { code },
-                    protocol: Request.Scheme);
-
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                if(user != null)
+                {
+                    return NotFound($"Your Username is ' {user.UserName} '.");
+                }
+                
             }
 
             return Page();

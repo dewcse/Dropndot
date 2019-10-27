@@ -70,7 +70,7 @@ namespace Dropndot.Areas.Identity.Pages.Account
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                return NotFound($"Please insert correct email instead of this wrong email: '{Input.Email}'.");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);

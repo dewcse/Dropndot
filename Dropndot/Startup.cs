@@ -73,6 +73,7 @@ namespace Dropndot
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
             });
 
             services.AddOptions();
