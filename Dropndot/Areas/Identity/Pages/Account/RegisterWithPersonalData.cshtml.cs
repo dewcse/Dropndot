@@ -40,6 +40,9 @@ namespace Dropndot.Areas.Identity.Pages.Account
             [StringLength(12, ErrorMessage = "The {0} must be at least 6 characters long.", MinimumLength = 6)]
             public string PhoneNumber { get; set; }
 
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
             [Required]
             [Display(Name = "Security Question")]
             public string SecurityQuestion { get; set; }
@@ -69,6 +72,7 @@ namespace Dropndot.Areas.Identity.Pages.Account
                 {
                     user.FirstName = Input.FirstName;
                     user.LastName = Input.LastName;
+                    user.Address = Input.Address;
                     user.SecurityQuestion = Input.SecurityQuestion;
                     user.SecurityAnswer = Input.SecurityAnswer;
                     user.PhoneNumber = Input.PhoneNumber;
